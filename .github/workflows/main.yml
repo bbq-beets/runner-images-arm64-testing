@@ -1,0 +1,11 @@
+name: Test macos13-arm64
+
+on: [push]
+
+jobs:
+  test-run:
+    runs-on: macos-13-arm64
+    steps:
+      - name: display version
+        run: |
+          sudo sw_vers
