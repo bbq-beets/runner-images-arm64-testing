@@ -8,4 +8,4 @@ jobs:
     steps:
       - name: display version
         run: |
-          sudo sw_vers
+          sudo sw_vers && arch
