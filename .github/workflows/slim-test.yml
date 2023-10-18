@@ -13,4 +13,4 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            df -h
+            sudo du -sh /
