@@ -13,4 +13,4 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            sudo du -sh /usr/local/bin/ 
+            sudo du -sh /usr/local/bin/*
