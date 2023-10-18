@@ -13,4 +13,4 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            sudo du -sh /
+            sudo du -cBM --max-depth=1 2> >(grep -v 'Permission denied') | sort -n 
