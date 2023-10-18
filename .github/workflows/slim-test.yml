@@ -1,0 +1,16 @@
+on: 
+  workflow_dispatch:
+  
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ayupov-slim-ubunta20, ayupov-slim-ubunta22]
+      fail-fast: false  
+    runs-on: ${{ matrix.os }}
+    name: test var
+    steps:
+      - name: test package installation
+        shell: bash
+        run: |
+            df -h
