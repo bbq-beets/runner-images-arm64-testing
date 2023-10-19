@@ -13,30 +13,16 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            image_label="$(lsb_release -rs)"
-            swift_version=$(curl -fsSL "https://api.github.com/repos/apple/swift/releases/latest" | jq -r '.tag_name | match("[0-9.]+").string')
+            sudo apt-get update
+            sudo apt-get install -y chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev
+            PHANTOM_JS=phantomjs-2.1.1-linux-x86_64
+            curl https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2 -4 -sL -o '/tmp/phantomjs-2.1.1-linux-x86_64.tar.bz2' -w '%{http_code}'
+            tar xjf /tmp/$PHANTOM_JS.tar.bz2 -C /usr/local/share
+            ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
+            phantomjs --version
+            echo "android section"
+            sudo du -sh /usr/local/lib/android
+            echo "------------"
+            sudo du -sh /usr/local/lib/android/sdk/* | sort -h
             
-            swift_tar_name="swift-$swift_version-RELEASE-ubuntu$image_label.tar.gz"
-            swift_tar_url="https://swift.org/builds/swift-$swift_version-release/ubuntu${image_label//./}/swift-$swift_version-RELEASE/$swift_tar_name"
-
-            echo $swift_tar_url
-            curl $swift_tar_url -4 -sL -o "/tmp/${swift_tar_name}" -w '%{http_code}'
-
-            sudo du -sh /tmp
-            tar xzf /tmp/$swift_tar_name
-            
-            SWIFT_INSTALL_ROOT="/usr/share/swift"
-            SWIFT_BIN_ROOT="$SWIFT_INSTALL_ROOT/usr/bin"
-            SWIFT_LIB_ROOT="$SWIFT_INSTALL_ROOT/usr/lib"
-            
-            mv swift-$swift_version-RELEASE-ubuntu$image_label $SWIFT_INSTALL_ROOT
-            mkdir -p /usr/local/lib
-            
-            ln -s "$SWIFT_BIN_ROOT/swift" /usr/local/bin/swift
-            ln -s "$SWIFT_BIN_ROOT/swiftc" /usr/local/bin/swiftc
-            ln -s "$SWIFT_LIB_ROOT/libsourcekitdInProc.so" /usr/local/lib/libsourcekitdInProc.so
-            
-            echo "SWIFT_PATH=$SWIFT_BIN_ROOT" | tee -a /etc/environment
-
-            swift --version
 
