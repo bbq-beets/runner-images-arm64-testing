@@ -21,7 +21,8 @@ jobs:
 
             echo $swift_tar_url
             curl $swift_tar_url -4 -sL -o '/tmp/$swift_tar_name' -w '%{http_code}'
-            
+
+            ls -la /tmp
             tar xzf /tmp/$swift_tar_name
             
             SWIFT_INSTALL_ROOT="/usr/share/swift"
