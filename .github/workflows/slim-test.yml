@@ -11,10 +11,7 @@ jobs:
     name: test var
     steps:
       - name: test package installation
-        shell: bash
+        shell: pwsh
         run: |
-            curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz -4 -sL -o '/tmp/oc.tar.gz' -w '%{http_code}'
-
-            tar xzf /tmp/oc.tar.gz -C /usr/local/bin oc
-            oc version
+            install-Module MarkdownPS -Scope CurrentUser -Force
 
