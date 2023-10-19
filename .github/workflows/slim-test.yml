@@ -13,8 +13,13 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            sudo du -sh /usr/local/bin/* | sort -h
-            echo "------------"
-            sudo du -sh /var/lib/docker/overlay2/
-            echo "------------"
-            sudo du -sh /var/lib/docker/overlay2/* | sort -h
+            source_list=/etc/apt/sources.list.d/eslerlang.list
+            source_key=/usr/share/keyrings/eslerlang.gpg
+            
+            # Install Erlang
+            wget -q -O - https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | gpg --dearmor > $source_key
+            echo "deb [signed-by=$source_key]  https://packages.erlang-solutions.com/ubuntu $(lsb_release -cs) contrib" > $source_list
+            sudo apt-get update
+            
+            sudo apt-get install --no-install-recommends esl-erlang
+
