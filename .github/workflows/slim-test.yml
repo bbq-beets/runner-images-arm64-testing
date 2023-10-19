@@ -13,11 +13,8 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            echo "deb https://cli-assets.heroku.com/channels/stable/apt ./" > /etc/apt/sources.list.d/heroku.list
-            
-            # install heroku's release key for package verification
-            curl https://cli-assets.heroku.com/channels/stable/apt/release.key | apt-key add -
-            
-            # install heroku
-            apt-get update -y && apt-get install -y heroku
+            apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xB4112585D386EB94
+            add-apt-repository https://dl.hhvm.com/ubuntu
+            apt-get update
+            apt-get -qq install -y hhvm
 
