@@ -14,11 +14,11 @@ jobs:
         shell: bash
         run: |
             sudo du -sh /opt/pipx_bin
-            $package="ansible-core"
+            package="ansible-core"
             pipx install $package
             pipx inject $package ansible
             sudo du -sh /opt/pipx_bin
-            $package="yamllint"
+            package="yamllint"
             pipx install $package
             sudo du -sh /opt/pipx_bin
 
