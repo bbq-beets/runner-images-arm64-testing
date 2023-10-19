@@ -13,12 +13,12 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            sudo du -sh /opt/pipx_bin
+            sudo du -sh /opt/pipx
             package="ansible-core"
             pipx install $package
             pipx inject $package ansible
-            sudo du -sh /opt/pipx_bin
+            sudo du -sh /opt/pipx
             package="yamllint"
             pipx install $package
-            sudo du -sh /opt/pipx_bin
+            sudo du -sh /opt/pipx
 
