@@ -13,9 +13,28 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            curl https://github.com/sbt/sbt/releases/download/v1.9.6/sbt-1.9.6.tgz -4 -sL -o '/tmp/sbt.tgz' -w '%{http_code}'
-            tar zxf /tmp/sbt.tgz -C /usr/share
-            ln -s /usr/share/sbt/bin/sbt /usr/bin/sbt
-            echo "run sbt"
-            sbt --version
+            image_label="$(lsb_release -rs)"
+            swift_version=$(curl -fsSL "https://api.github.com/repos/apple/swift/releases/latest" | jq -r '.tag_name | match("[0-9.]+").string')
+            
+            swift_tar_name="swift-$swift_version-RELEASE-ubuntu$image_label.tar.gz"
+            swift_tar_url="https://swift.org/builds/swift-$swift_version-release/ubuntu${image_label//./}/swift-$swift_version-RELEASE/$swift_tar_name"
+            
+            curl $swift_tar_url -4 -sL -o '/tmp/$swift_tar_name' -w '%{http_code}'
+            
+            tar xzf /tmp/$swift_tar_name
+            
+            SWIFT_INSTALL_ROOT="/usr/share/swift"
+            SWIFT_BIN_ROOT="$SWIFT_INSTALL_ROOT/usr/bin"
+            SWIFT_LIB_ROOT="$SWIFT_INSTALL_ROOT/usr/lib"
+            
+            mv swift-$swift_version-RELEASE-ubuntu$image_label $SWIFT_INSTALL_ROOT
+            mkdir -p /usr/local/lib
+            
+            ln -s "$SWIFT_BIN_ROOT/swift" /usr/local/bin/swift
+            ln -s "$SWIFT_BIN_ROOT/swiftc" /usr/local/bin/swiftc
+            ln -s "$SWIFT_LIB_ROOT/libsourcekitdInProc.so" /usr/local/lib/libsourcekitdInProc.so
+            
+            echo "SWIFT_PATH=$SWIFT_BIN_ROOT" | tee -a /etc/environment
+
+            swift --version
 
