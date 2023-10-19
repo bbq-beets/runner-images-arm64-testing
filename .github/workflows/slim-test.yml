@@ -20,9 +20,9 @@ jobs:
             swift_tar_url="https://swift.org/builds/swift-$swift_version-release/ubuntu${image_label//./}/swift-$swift_version-RELEASE/$swift_tar_name"
 
             echo $swift_tar_url
-            curl $swift_tar_url -4 -sL -o '/tmp/swift-5.9-RELEASE-ubuntu20.04.tar.gz' -w '%{http_code}'
+            curl $swift_tar_url -4 -sL -o "/tmp/${swift_tar_name}" -w '%{http_code}'
 
-            du -sh /tmp
+            sudo du -sh /tmp
             tar xzf /tmp/$swift_tar_name
             
             SWIFT_INSTALL_ROOT="/usr/share/swift"
