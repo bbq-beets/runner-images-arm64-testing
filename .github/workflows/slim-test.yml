@@ -16,5 +16,5 @@ jobs:
             curl https://github.com/oras-project/oras/releases/download/v1.1.0/oras_1.1.0_linux_amd64.tar.gz -4 -sL -o '/tmp/oras_1.1.0_linux_amd64.tar.gz' -w '%{http_code}'
 
             tar xzf /tmp/oras_1.1.0_linux_amd64.tar.gz -C /usr/local/bin oras
-            
+            oras version
 
