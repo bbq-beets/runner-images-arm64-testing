@@ -14,3 +14,7 @@ jobs:
         shell: bash
         run: |
             sudo du -sh /usr/local/bin/* | sort -h
+            echo "------------"
+            sudo du -sh /var/lib/docker/overlay2/
+            echo "------------"
+            sudo du -sh /var/lib/docker/overlay2/* | sort -h
