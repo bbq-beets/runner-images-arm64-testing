@@ -13,9 +13,21 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            apt-get install -y chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev
-            PHANTOM_JS=phantomjs-2.1.1-linux-x86_64
-            curl https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2 -4 -sL -o '/tmp/phantomjs-2.1.1-linux-x86_64.tar.bz2' -w '%{http_code}'
-            tar xjf /tmp/$PHANTOM_JS.tar.bz2 -C /usr/local/share
-            ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
+            export PIPX_BIN_DIR=/opt/pipx_bin
+            export PIPX_HOME=/opt/pipx
+            python3 -m pip install pipx
+            python3 -m pipx ensurepath
+            # Update /etc/environment
+            setEtcEnvironmentVariable "PIPX_BIN_DIR" $PIPX_BIN_DIR
+            setEtcEnvironmentVariable "PIPX_HOME" $PIPX_HOME
+            prependEtcEnvironmentPath $PIPX_BIN_DIR
+            prependEtcEnvironmentPath '$HOME/.local/bin'
+            sudo du -sh /opt/pipx_bin
+            $package="ansible-core"
+            pipx install $package
+            pipx inject $package ansible
+            sudo du -sh /opt/pipx_bin
+            $package="yamllint"
+            pipx install $package
+            sudo du -sh /opt/pipx_bin
 
