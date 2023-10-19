@@ -13,8 +13,8 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            curl https://github.com/oras-project/oras/releases/download/v1.1.0/oras_1.1.0_linux_amd64.tar.gz -4 -sL -o '/tmp/oras_1.1.0_linux_amd64.tar.gz' -w '%{http_code}'
+            curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz -4 -sL -o '/tmp/oc.tar.gz' -w '%{http_code}'
 
-            tar xzf /tmp/oras_1.1.0_linux_amd64.tar.gz -C /usr/local/bin oras
-            oras version
+            tar xzf /tmp/oc.tar.gz -C /usr/local/bin oc
+            oc version
 
