@@ -13,15 +13,6 @@ jobs:
       - name: test package installation
         shell: bash
         run: |
-            export PIPX_BIN_DIR=/opt/pipx_bin
-            export PIPX_HOME=/opt/pipx
-            python3 -m pip install pipx
-            python3 -m pipx ensurepath
-            # Update /etc/environment
-            setEtcEnvironmentVariable "PIPX_BIN_DIR" $PIPX_BIN_DIR
-            setEtcEnvironmentVariable "PIPX_HOME" $PIPX_HOME
-            prependEtcEnvironmentPath $PIPX_BIN_DIR
-            prependEtcEnvironmentPath '$HOME/.local/bin'
             sudo du -sh /opt/pipx_bin
             $package="ansible-core"
             pipx install $package
