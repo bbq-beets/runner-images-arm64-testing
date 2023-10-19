@@ -18,7 +18,8 @@ jobs:
             
             swift_tar_name="swift-$swift_version-RELEASE-ubuntu$image_label.tar.gz"
             swift_tar_url="https://swift.org/builds/swift-$swift_version-release/ubuntu${image_label//./}/swift-$swift_version-RELEASE/$swift_tar_name"
-            
+
+            echo $swift_tar_url
             curl $swift_tar_url -4 -sL -o '/tmp/$swift_tar_name' -w '%{http_code}'
             
             tar xzf /tmp/$swift_tar_name
