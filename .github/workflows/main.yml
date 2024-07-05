@@ -5,8 +5,9 @@ on: #[push]
   
 jobs:
   test-run:
-    runs-on: macos-13-arm64
+    runs-on: macos-14-large
     steps:
-      - name: display version
+      - name: test install simulators
         run: |
-          sudo sw_vers && arch
+          sudo xcode-select --switch "/Applications/Xcode_16.0.app" 
+          sudo /Applications/Xcode_16.0.app/Contents/Developer/usr/bin/xcodebuild -downloadAllPlatforms
