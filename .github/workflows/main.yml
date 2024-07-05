@@ -1,4 +1,4 @@
-name: Test macos13-arm64
+name: Test macos14 simulators
 
 on: #[push]
   workflow_dispatch:
@@ -9,5 +9,5 @@ jobs:
     steps:
       - name: test install simulators
         run: |
-          sudo xcode-select --switch "/Applications/Xcode_16.0.app" 
-          sudo /Applications/Xcode_16.0.app/Contents/Developer/usr/bin/xcodebuild -downloadAllPlatforms
+          #sudo xcode-select --switch "/Applications/Xcode_16.0.app" 
+          /Applications/Xcode_16.0.app/Contents/Developer/usr/bin/xcodebuild -downloadAllPlatforms
