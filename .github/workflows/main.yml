@@ -14,11 +14,5 @@ jobs:
       - name: cinstall ninja
         shell: bash
         run: |
-          brew install ninja
-      - name: run ninja
-        shell: bash
-        run: |
-          ninja --version
-          echo 'cmake_minimum_required(VERSION 3.10)' >> CMakeLists.txt
-          echo 'project(NinjaTest NONE)' >> CMakeLists.txt
-          cmake -GNinja .
+          $env:path.Split(';')
+
