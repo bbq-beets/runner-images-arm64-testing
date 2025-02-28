@@ -1,13 +1,24 @@
-name: Test macos14 simulators
+name: another test
 
-on: #[push]
-  workflow_dispatch:
+on: 
+  workflow_dispatch
   
 jobs:
-  test-run:
-    runs-on: macos-14
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-13-xlarge, macos-14-large, macos-13, macos-15, macos-15-large ]     
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: test install simulators
+      - name: cinstall ninja
+        shell: bash
         run: |
-          sudo xcode-select --switch "/Applications/Xcode_16.0.app" 
-          sudo /Applications/Xcode_16.0.app/Contents/Developer/usr/bin/xcodebuild -downloadAllPlatforms
+          brew install ninja
+      - name: run ninja
+        shell: bash
+        run: |
+          ninja --version
+          echo 'cmake_minimum_required(VERSION 3.10)' >> CMakeLists.txt
+          echo 'project(NinjaTest NONE)' >> CMakeLists.txt
+          cmake -GNinja .
